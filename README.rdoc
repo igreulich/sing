@@ -1,0 +1,6 @@
+= sing
+
+Describe your project here
+
+:include:sing.rdoc
+
