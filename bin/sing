@@ -14,10 +14,12 @@ $: << File.expand_path(File.dirname(File.realpath(__FILE__)) + '/../lib')
 require 'rubygems'
 require 'gli'
 require 'sing_version'
+require 'fileutils'
+require 'net/http'
 
 include GLI
 
-program_desc 'Describe your application here'
+program_desc 'Sing will create the basic directory structure and base files for a Sinatra application.'
 
 version Sing::VERSION
 

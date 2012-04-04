@@ -3,11 +3,11 @@ require File.join([File.dirname(__FILE__),'lib','sing_version.rb'])
 spec = Gem::Specification.new do |s| 
   s.name = 'sing'
   s.version = Sing::VERSION
-  s.author = 'Your Name Here'
-  s.email = 'your@email.address.com'
-  s.homepage = 'http://your.website.com'
+  s.author = 'Ian Greulich'
+  s.email = 'ian.greulich@gmail.com'
+  s.homepage = 'http://igreulich.github.com/sing/'
   s.platform = Gem::Platform::RUBY
-  s.summary = 'A description of your project'
+  s.summary = 'Sing will create the basic directory structure and base files for a Sinatra webapp. It creates your Gemfile (containing haml, sass, and compass), config.ru, index.haml, application.scss, and downloads jquery for you.'
 # Add your other files here if you make them
   s.files = %w(
 bin/sing
