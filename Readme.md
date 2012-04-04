@@ -27,6 +27,15 @@ For help use:
 
     sing help
 
+### Commands
+---
+Currently the commands are limited to:
+
+    sing new
+    sing help
+
+but I am open to adding more.
+
 ### Options
 ---
     -v, --version       Display the version  
