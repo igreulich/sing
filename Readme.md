@@ -16,35 +16,34 @@ to live in:
 
 Other examples:
 
-    sing -p my_project
-    sing --verbose my_project
+    sing -q new my_project
+    sing --verbose new my_project
 
 ### Usage
 ---
-    sing [options] my_project
+    sing [options] command [project_name]
 
 For help use:
 
-    sing -h
+    sing help
 
 ### Options
 ---
-    -h, --help          Displays help message  
     -v, --version       Display the version  
     -q, --quiet         Output as little as possible, overrides verbose  
     -V, --verbose       Verbose output (default)
 
 ### Authors
 ---
-  Ian Greulich  
-  Based on Sow by David Duggins
+Ian Greulich  
+Based on Sow by David Duggins
 
 ### Copyright
 ---
-  Copyright (c) 2012 Ian Greulich. Licensed under the MIT License:  
-  http://www.opensource.org/licenses/mit-license.php  
-  Copyright (c) 2010 David Duggins. Licensed under GPL2:  
-  http://www.opensource.org/licenses/GPL-2.0
+Copyright (c) 2012 Ian Greulich. Licensed under the MIT License:  
+http://www.opensource.org/licenses/mit-license.php  
+Copyright (c) 2010 David Duggins. Licensed under GPL2:  
+http://www.opensource.org/licenses/GPL-2.0
 
 ### CHANGE LOG:
 ---
