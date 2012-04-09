@@ -56,6 +56,8 @@ http://www.opensource.org/licenses/GPL-2.0
 
 ### CHANGE LOG:
 ---
+#### 2012.04.09
+Refactored so basic command line structure now works ```sing new my_project```. Flags do not work, and generates incorrect files.
 #### 2012.04.04
 Changed Readme.md to define the scope of the next steps of the development of Sing.
 #### 2010.05.14
