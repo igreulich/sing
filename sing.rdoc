@@ -1,0 +1,5 @@
+= sing
+
+Generate this with
+    sing rdoc
+After you have described your command line interface
