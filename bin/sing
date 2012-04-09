@@ -23,29 +23,107 @@ program_desc 'Sing will create the basic directory structure and base files for 
 
 version Sing::VERSION
 
-desc 'Describe some switch here'
-switch [:s,:switch]
+desc 'display the version'
+switch [:v,:version]
 
-desc 'Describe some flag here'
-default_value 'the default'
-arg_name 'The name of the argument'
-flag [:f,:flagname]
+desc 'runs with output (default)'
+switch [:V,:verbose]
 
-desc 'Describe new here'
-arg_name 'Describe arguments to new here'
+desc 'runs with minimal output'
+switch [:q,:quiet]
+
+# desc 'the project name'
+# default_value 'my_app'
+# arg_name 'project_name'
+# flag [:p,:project]
+
+desc 'Creates new project'
+arg_name 'project_name'
 command :new do |c|
-  c.desc 'Describe a switch to new'
-  c.switch :s
+  # c.desc 'Describe a switch to new'
+  # c.switch :s
 
-  c.desc 'Describe a flag to new'
-  c.default_value 'default'
-  c.flag :f
+  # c.desc 'Describe a flag to new'
+  # c.default_value 'default'
+  # c.flag :f
   c.action do |global_options,options,args|
+###############################################################################
+# From sow.rb                                                                 #
+# TODO: Clean up, test                                                        #
+###############################################################################
+    # Here you can define the directory structure that you want on the base level
+    dir_structure = ['stylesheets','javascript','images']
+    javascript_dir = 'javascript'
 
-    # Your command logic here
-     
-    # If you have any errors, just raise them
-    # raise "that command made no sense"
+    #TODO Need to add some code for css and maybe some automatic image stuff
+    css_dir = 'stylesheets'
+
+    # This makes sure that a variable has been passed
+    if args.length == 0
+      puts "Please enter the name of your Project"
+      exit 0
+    end
+
+    # Sets the project name
+    project = args[0]
+    FileUtils.mkdir_p project
+    puts "#{project}:CREATED"
+    FileUtils.cd project
+    # Creates a XHTML Strict Doctype Index file
+    File.open("index.html", 'w') {|file|
+    file.puts "<!DOCTYPE html>"
+    file.puts "<html>"
+    file.puts " <head>"
+    file.puts "   <title></title>"
+    file.puts " </head>"
+    file.puts " <body>"
+    file.puts " "
+    file.puts " </body>"
+    file.puts "</html>"}
+    puts "index.html........done"
+
+    # Runs through the array defined in options to create the Directory Structure.
+
+    dir_structure.each do |i|
+      FileUtils.mkdir_p i
+      puts "#{i}:CREATED"
+    end
+    #Here we load the base CSS file
+    File.open("stylesheets/style.css", 'w'){ |file|
+    file.puts "# Insert style Here"
+    }
+    puts "style.css.....done"
+    #this is where we load the JavaScript Libraries into the JavaScript folder
+    FileUtils.cd javascript_dir
+    Net::HTTP.start("script.aculo.us") { |http|
+      resp = http.get("/dist/scriptaculous-js-1.8.3.tar.bz2")
+      open("scriptaculous-js-1.8.3.tar.bz2", "wb") { |file|
+        file.write(resp.body)
+       }
+    }
+    puts "Prototype.........Downloaded"
+    puts "Scriptaculous.....Downloaded"
+    
+    # TODO Need to add some code to extract the prototype/scriptaculous libraries
+      
+    Net::HTTP.start("code.jquery.com") { |http|
+      resp = http.get("/jquery-1.4.2.js")
+      open("jquery-1.4.2.js", "wb") { |file|
+        file.write(resp.body)
+       }
+    }
+    puts "JQuery............Downloaded"
+
+    Net::HTTP.start("mootools.net") { |http|
+      resp = http.get("/download/get/mootools-1.2.4-core-nc.js")
+      open("mootools-1.2.4-core-nc.js", "wb") { |file|
+        file.write(resp.body)
+       }
+    }
+    puts "MooTools..........Downloaded"
+###############################################################################
+# END: From sow.rb                                                            #
+###############################################################################
   end
 end
 
