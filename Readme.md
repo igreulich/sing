@@ -1,16 +1,19 @@
 ## Sing
 Making Sinatra even easier.
 
-Sing will create the basic directory structure and base files for a Sinatra 
-webapp. It creates your Gemfile (containing haml, sass, and compass), 
-config.ru, index.haml, application.scss, and downloads jquery for you.
+Sing will create the basic directory structure and base files for a Sinatra webapp. It creates your Gemfile (containing haml, sass, and compass), config.ru, index.haml, application.scss, and downloads jquery for you.
 
 I created this with ruby 1.9.2, but it should work in 1.8.7 just fine.
 
+### Installation
+---
+To install, assuming you are using [RVM](http://beginrescueend.com/) (and you should be),
+
+    gem install sing
+
 ### Examples
 ---
-Create a new project; from the dirctory you want the project directory
-to live in:
+Create a new project; from the dirctory you want the project directory to live in:
 
     sing new my_project
 
@@ -21,7 +24,7 @@ to live in:
 -->
 ### Usage
 ---
-    sing [options] command [project_name]
+    sing command project_name
 
 For help use:
 
