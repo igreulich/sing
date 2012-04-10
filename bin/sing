@@ -23,14 +23,14 @@ program_desc 'Sing will create the basic directory structure and base files for 
 
 version Sing::VERSION
 
-desc 'display the version'
-switch [:v,:version]
+# desc 'display the version'
+# switch [:v,:version]
 
-desc 'runs with output (default)'
-switch [:V,:verbose]
+# desc 'runs with output (default)'
+# switch [:V,:verbose]
 
-desc 'runs with minimal output'
-switch [:q,:quiet]
+# desc 'runs with minimal output'
+# switch [:q,:quiet]
 
 # desc 'the project name'
 # default_value 'my_app'
@@ -47,83 +47,103 @@ command :new do |c|
   # c.default_value 'default'
   # c.flag :f
   c.action do |global_options,options,args|
-###############################################################################
-# From sow.rb                                                                 #
-# TODO: Clean up, test                                                        #
-###############################################################################
-    # Here you can define the directory structure that you want on the base level
-    dir_structure = ['stylesheets','javascript','images']
-    javascript_dir = 'javascript'
+    # Define the directory structure that you want
+    dir_structure  = ['public/stylesheets','public/javascripts','public/images', 'views']
+    javascript_dir = 'public/javascripts'
+    css_dir        = 'public/stylesheets'
 
-    #TODO Need to add some code for css and maybe some automatic image stuff
-    css_dir = 'stylesheets'
-
-    # This makes sure that a variable has been passed
+    # This makes sure that a project name is present
     if args.length == 0
-      puts "Please enter the name of your Project"
-      exit 0
+      puts "Please enter the name of your project"
+      exit 1
     end
 
-    # Sets the project name
+    # Sets the project name and creates the main directory
     project = args[0]
     FileUtils.mkdir_p project
-    puts "#{project}:CREATED"
-    FileUtils.cd project
-    # Creates a XHTML Strict Doctype Index file
-    File.open("index.html", 'w') {|file|
-    file.puts "<!DOCTYPE html>"
-    file.puts "<html>"
-    file.puts " <head>"
-    file.puts "   <title></title>"
-    file.puts " </head>"
-    file.puts " <body>"
-    file.puts " "
-    file.puts " </body>"
-    file.puts "</html>"}
-    puts "index.html........done"
-
-    # Runs through the array defined in options to create the Directory Structure.
-
-    dir_structure.each do |i|
-      FileUtils.mkdir_p i
-      puts "#{i}:CREATED"
-    end
-    #Here we load the base CSS file
-    File.open("stylesheets/style.css", 'w'){ |file|
-    file.puts "# Insert style Here"
-    }
-    puts "style.css.....done"
-    #this is where we load the JavaScript Libraries into the JavaScript folder
-    FileUtils.cd javascript_dir
-    Net::HTTP.start("script.aculo.us") { |http|
-      resp = http.get("/dist/scriptaculous-js-1.8.3.tar.bz2")
-      open("scriptaculous-js-1.8.3.tar.bz2", "wb") { |file|
-        file.write(resp.body)
-       }
-    }
-    puts "Prototype.........Downloaded"
-    puts "Scriptaculous.....Downloaded"
+    puts "created - /#{project}"
     
-    # TODO Need to add some code to extract the prototype/scriptaculous libraries
-      
-    Net::HTTP.start("code.jquery.com") { |http|
-      resp = http.get("/jquery-1.4.2.js")
-      open("jquery-1.4.2.js", "wb") { |file|
-        file.write(resp.body)
-       }
-    }
-    puts "JQuery............Downloaded"
+    # Move into the main directory
+    FileUtils.cd project
+    
+    # Creates app.rb, config.ru, gemfile, README.md
+    File.open("./app.rb", 'w') do |file|
+      file.puts "require 'rubygems'\nrequire 'sinatra'\nrequire 'haml'\n\nget '/' do\n\t@title = 'Hello World'\n\thaml :index\nend"
+    end
+    puts "\ncreated - app.rb"
+    
+    File.open("./config.ru", 'w') do |file|
+      file.puts "require './app'\nrun Sinatra::Application"
+    end
+    puts "created - config.ru"
 
-    Net::HTTP.start("mootools.net") { |http|
-      resp = http.get("/download/get/mootools-1.2.4-core-nc.js")
-      open("mootools-1.2.4-core-nc.js", "wb") { |file|
-        file.write(resp.body)
-       }
-    }
-    puts "MooTools..........Downloaded"
-###############################################################################
-# END: From sow.rb                                                            #
-###############################################################################
+    File.open("./Gemfile", 'w') do |file|
+      file.puts "source 'http://rubygems.org'\n\ngem 'sinatra'\ngem 'haml'\ngem 'activesupport'"
+    end
+    puts "created - Gemfile"
+    
+    File.open("./README.md", 'w') do |file|
+      file.puts "This is your README. Use markdown to create it."
+    end
+    puts "created - README.md"
+
+    puts "\n"
+    
+    # Creates the directory structure
+    dir_structure.each do |dir|
+      FileUtils.mkdir_p dir
+      puts "created - /#{dir}"
+    end
+    
+    puts "\n"
+    
+    #creates layout.haml, and index.haml (includes jquery, and bootstrap css, responsive css, and all plugins)
+    File.open("./views/layout.haml", 'w') do |file|
+      file.puts "!!!"
+      file.puts "%html"
+      file.puts "  %head"
+      file.puts "    %title= @title"
+      file.puts ""
+      file.puts "    %meta{:charset => 'utf-8'}"
+      file.puts ""
+      file.puts "    %script{:src => 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'}"
+      file.puts "    %script{:src => 'http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.2/bootstrap.min.js'}"
+      file.puts "    %script{:src => 'javascripts/application.js'}"
+      file.puts ""
+      file.puts "    %link{:type => 'text/css', :rel => 'stylesheet', :media => 'screen', :href => 'http://twitter.github.com/bootstrap/assets/css/bootstrap.css'}"
+      file.puts "    %link{:type => 'text/css', :rel => 'stylesheet', :media => 'screen', :href => 'http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css'}"
+      file.puts "    %link{:type => 'text/css', :rel => 'stylesheet', :media => 'screen', :href => 'stylesheets/application.css'}"
+      file.puts "  %body{:style => 'padding-top: 60px'}"
+      file.puts ""
+      file.puts "    = yield"
+      file.puts ""
+      file.puts "    .container"
+      file.puts "      %hr"
+    end
+    puts "created - layout.haml"
+    
+    File.open("./views/index.haml", 'w') do |file|
+      file.puts ".navbar.navbar-fixed-top"
+      file.puts "  .navbar-inner"
+      file.puts "    .container"
+      file.puts "      %a.brand{:href => '/'}"
+      file.puts "        Hello World!"
+      file.puts ".container"
+      file.puts "  %h2.center Hello World"
+    end
+    puts "created - index.haml"
+    
+    # Create the application.css file
+    File.open("./public/stylesheets/application.css", 'w') do |file|
+      file.puts ".center{\n\ttext-align: center;\n}\n\n.right{\n\tfloat: right;\n}\n\n.left{\n\tfloat: left;\n}\n\n.clear{\n\tclear: both;\n}"
+    end
+    puts "created - application.css"
+    
+    # Creates application.js file
+    File.open("./public/javascripts/application.js", 'w') do |file|
+      file.puts "// Application javascript goes here"
+    end
+    puts "created - application.js"
   end
 end
 
