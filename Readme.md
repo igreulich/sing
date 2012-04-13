@@ -1,7 +1,7 @@
 ## Sing
 Making Sinatra even easier.
 
-Sing will create the basic directory structure and base files for a Sinatra webapp. It creates your Gemfile (containing haml, sass, and compass), config.ru, index.haml, application.scss, and downloads jquery for you.
+Sing will create the basic directory structure and base files for a Sinatra webapp. It creates your Gemfile (containing haml, sinatra, and rubygems), config.ru, index.haml, layout.haml (includes Twitter Bootstrap, and the current jQuery), application.css.
 
 I created this with ruby 1.9.2, but it should work in 1.8.7 just fine.
 
