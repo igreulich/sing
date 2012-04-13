@@ -62,16 +62,16 @@ command :new do |c|
     project = args[0]
     FileUtils.mkdir_p project
     puts "created - /#{project}"
-    
+
     # Move into the main directory
     FileUtils.cd project
-    
+
     # Creates app.rb, config.ru, gemfile, README.md
     File.open("./app.rb", 'w') do |file|
       file.puts "require 'rubygems'\nrequire 'sinatra'\nrequire 'haml'\n\nget '/' do\n\t@title = 'Hello World'\n\thaml :index\nend"
     end
     puts "\ncreated - app.rb"
-    
+
     File.open("./config.ru", 'w') do |file|
       file.puts "require './app'\nrun Sinatra::Application"
     end
@@ -81,22 +81,22 @@ command :new do |c|
       file.puts "source 'http://rubygems.org'\n\ngem 'sinatra'\ngem 'haml'\ngem 'activesupport'"
     end
     puts "created - Gemfile"
-    
+
     File.open("./README.md", 'w') do |file|
       file.puts "This is your README. Use markdown to create it."
     end
     puts "created - README.md"
 
     puts "\n"
-    
+
     # Creates the directory structure
     dir_structure.each do |dir|
       FileUtils.mkdir_p dir
       puts "created - /#{dir}"
     end
-    
+
     puts "\n"
-    
+
     #creates layout.haml, and index.haml (includes jquery, and bootstrap css, responsive css, and all plugins)
     File.open("./views/layout.haml", 'w') do |file|
       file.puts "!!!"
@@ -106,9 +106,6 @@ command :new do |c|
       file.puts ""
       file.puts "    %meta{:charset => 'utf-8'}"
       file.puts ""
-      file.puts "    %script{:src => 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'}"
-      file.puts "    %script{:src => 'http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.2/bootstrap.min.js'}"
-      file.puts "    %script{:src => 'javascripts/application.js'}"
       file.puts ""
       file.puts "    %link{:type => 'text/css', :rel => 'stylesheet', :media => 'screen', :href => 'http://twitter.github.com/bootstrap/assets/css/bootstrap.css'}"
       file.puts "    %link{:type => 'text/css', :rel => 'stylesheet', :media => 'screen', :href => 'http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css'}"
@@ -119,9 +116,12 @@ command :new do |c|
       file.puts ""
       file.puts "    .container"
       file.puts "      %hr"
+      file.puts "    %script{:src => 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'}"
+      file.puts "    %script{:src => 'http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.2/bootstrap.min.js'}"
+      file.puts "    %script{:src => 'javascripts/application.js'}"
     end
     puts "created - layout.haml"
-    
+
     File.open("./views/index.haml", 'w') do |file|
       file.puts ".navbar.navbar-fixed-top"
       file.puts "  .navbar-inner"
@@ -132,13 +132,13 @@ command :new do |c|
       file.puts "  %h2.center Hello World"
     end
     puts "created - index.haml"
-    
+
     # Create the application.css file
     File.open("./public/stylesheets/application.css", 'w') do |file|
       file.puts ".center{\n\ttext-align: center;\n}\n\n.right{\n\tfloat: right;\n}\n\n.left{\n\tfloat: left;\n}\n\n.clear{\n\tclear: both;\n}"
     end
     puts "created - application.css"
-    
+
     # Creates application.js file
     File.open("./public/javascripts/application.js", 'w') do |file|
       file.puts "// Application javascript goes here"
